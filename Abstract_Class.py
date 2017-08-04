@@ -11,7 +11,7 @@ class BaseWebSide(object):
 
     def start_app(self):
         Logic.show_list_in_console(self.list)
-        self.choice_of_action=Logic.which_number("podaj numer ",len(self.list))
+        self.choice_of_action=Logic.which_number("give me number ",len(self.list))
         self.action(self.choice_of_action)
 
     def action(self,number):
