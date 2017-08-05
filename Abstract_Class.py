@@ -1,6 +1,7 @@
 import os
 from string import ascii_letters
 from urllib.request import Request, urlopen
+
 from bs4 import BeautifulSoup
 
 
@@ -11,7 +12,7 @@ class BaseWebSide(object):
 
     def start_app(self):
         Logic.show_list_in_console(self.list)
-        self.choice_of_action=Logic.which_number("give me number ",len(self.list))
+        self.choice_of_action = Logic.which_number(len(self.list))
         self.action(self.choice_of_action)
 
     def action(self,number):
@@ -33,14 +34,23 @@ class BaseWebSide(object):
             print("ostatnia strona")
             exit()
 
+    def clean_to_name_file(self, text):
+        new = ""
+        for l in text:
+            if l not in ("/", "\\", "|", "'", ":", "?", ">", "<"):
+                new += l
+        return new
+
+
+
     def clean_from_bad_characters(self, text):
         new = ""
         for i in text:
             if i.isdigit() or i in ascii_letters or i == " ":
                 new += i
-            if i == "\r\n":
+            elif i == "\r\n":
                 new += "\r\n"
-            if i in "!%&*()<>?.,:\/{}[];'" or i == '"':
+            elif i in "!%&*()<>?.,:\/{}[];'" or i == '"':
                 new += i
         return new
 
@@ -56,7 +66,7 @@ class BaseWebSide(object):
 class Logic():
 
     @staticmethod
-    def which_number(max,text="podaj numer", min=0):
+    def which_number(max, text="give me number", min=0):
         if max-min==1:
             return 0
         number = min - 1
