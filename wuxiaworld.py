@@ -1,14 +1,17 @@
-from Abstract_Class import BaseWebSide
-from Abstract_Class import Logic
+from main_Classes import BaseWebSite
+from main_Classes import Logic
 
 
-class Wuxiaworld(BaseWebSide):
+class Wuxiaworld(BaseWebSite):
     MAIN_ADRES = "http://www.wuxiaworld.com/"
     OPTIONS_LIST = {"Completed": "menu-item-12207", "Chinese": "menu-item-2165", "Korean": "menu-item-116520"}
     NEXTCOMMAND = "Next Chapter"
 
-    def __init__(self):
-        super(Wuxiaworld, self).__init__(self.MAIN_ADRES, self.OPTIONS_LIST.keys())
+    def __init__(self,format):
+        super(Wuxiaworld,self).__init__(format)
+        self.index_adres = self.MAIN_ADRES
+        self.list = list(self.OPTIONS_LIST.keys())
+
 
     def action(self, number):
         self.all_title_and_link_from_translating(self.OPTIONS_LIST[self.list[number]])
@@ -49,7 +52,7 @@ class Wuxiaworld(BaseWebSide):
                 print(link.text)
                 print(adres)
                 print("#" * 20)
-                self.download_www_to_text(adres, link.text)
+                self.download_www_to_text(adres)
 
     # download all titles with links
     def all_title_and_link_from_translating(self, table):

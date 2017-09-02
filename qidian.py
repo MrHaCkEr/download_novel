@@ -1,13 +1,11 @@
 import json
 from urllib.request import Request, urlopen
 
-from Abstract_Class import BaseWebSide
-from Abstract_Class import Logic
+from main_Classes import BaseWebSite
+from main_Classes import Logic
 
 
-class Qidian(BaseWebSide):
-    def __init__(self):
-        pass
+class Qidian(BaseWebSite):
 
     def start_app(self):
         self.all_title_and_link_from_translating()
@@ -29,8 +27,9 @@ class Qidian(BaseWebSide):
             text = self.download_www_to_text(i["chapterId"], bookId)
             name = "%s-%s-%s" % (bookName, str(i["chapterIndex"]).rjust(4).replace(" ", "0"), i["chapterName"])
             name = self.clean_to_name_file(name.replace(" ", "_"))
-            self.to_file(text, name)
+            text=text.replace("\n\n","\n\n\n")
             print(name)
+            self.to_file(text, name)
 
     def download_www_to_text(self, chapterId, bookId):
         www = "https://www.webnovel.com/book/%s/%s" % (bookId, chapterId)
