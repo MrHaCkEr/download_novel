@@ -5,8 +5,10 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
 
 
-class BaseWebSide(object):
+class BaseWebSite(object):
+    FORMAT_FILE=("Txt","Pdf")
     def __init__(self,adres,options_list):
+
         self.index_adres = adres
         self.list = list(options_list)
 
@@ -31,7 +33,7 @@ class BaseWebSide(object):
             webpage = urlopen(req).read()
             return BeautifulSoup(webpage, "html.parser")
         except:
-            print("ostatnia strona")
+            print("last page")
             exit()
 
     def clean_to_name_file(self, text):
@@ -55,12 +57,26 @@ class BaseWebSide(object):
         return new
 
     def to_file(self, text,name):
+        if self.format=="Txt":
+            self.to_file_txt(text,name)
+
+
+
+    def to_file_txt(self,text,name):
         if not os.path.isdir(self.title):
             os.makedirs(self.title)
-        # errors="namereplace" powoduje brak problemu z wystepujacymi chinskimi znakami
+        # errors="namereplace" it error is with chinese character
         file = open(os.path.join(os.getcwd(), self.title, name  + ".txt"),mode="w",errors="namereplace")
         file.write(text)
         file.close()
+
+class FormatFile(object):
+    FORMAT_FILE={"txt":self.toTxtFile,}
+    def toFile(self):
+        pass
+    def toTxtFile(self):
+        pass
+
 
 
 class Logic():
