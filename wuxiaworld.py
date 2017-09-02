@@ -51,7 +51,7 @@ class Wuxiaworld(BaseWebSide):
                 print("#" * 20)
                 self.download_www_to_text(adres, link.text)
 
-    # pobiera wszystkie tytuly i linki
+    # download all titles with links
     def all_title_and_link_from_translating(self, table):
         soup = self.make_soup(self.index_adres)
         self.links_for_all_novel_index = []
